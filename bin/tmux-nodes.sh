@@ -9,11 +9,11 @@ sessname="${RANDOM}"
 splitmode="v"
 n=1
 
-tmux new-session -d -s ${#}-nodes -n ${sessname} '/bin/bash -l'
+tmux new-session -d -s ${sessname} -n ${#}-nodes '/bin/bash -l'
 tmux selectw -t ${sessname}
 for i in ${@} ; do
   tmux select-layout tiled >/dev/null 2>&1
-  tmux send-keys -t ${#}-nodes:${sessname}.$((${n}-1)) "ssh ${i}" C-m
+  tmux send-keys -t ${sessname}:${#}-nodes.$((${n}-1)) "ssh ${i}" C-m
   if [ ${n} -lt ${#} ] ; then
     tmux split-window -${splitmode}
     if [ "${splitmode}" == "v" ] ; then
@@ -25,5 +25,5 @@ for i in ${@} ; do
   fi
 done
 tmux selectp -t top-left
-tmux set-window-option -t ${#}-nodes:${sessname} synchronize-panes on
+tmux set-window-option -t ${sessname}:${#}-nodes synchronize-panes on
 tmux -2 attach-session -d
