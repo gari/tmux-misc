@@ -5,7 +5,7 @@ if [ ${#} -eq 0 ] ; then
   exit 1
 fi
 
-sessname="${RANDOM}"
+sessname="${$}-$(date +%Y%m%d%H%M%S)-${RANDOM}"
 splitmode="v"
 n=1
 
