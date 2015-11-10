@@ -5,15 +5,15 @@
 
 Name:           tmux
 Version:        2.1
-Release:        0%{?dist}
+Release:        1%{?dist}
 Summary:        A terminal multiplexer
 
 Group:          Applications/System
 # Most of the source is ISC licensed; some of the files in compat/ are 2 and
 # 3 clause BSD licensed.
 License:        ISC and BSD
-URL:            http://sourceforge.net/projects/tmux
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+URL:            https://tmux.github.io/
+Source0:        https://github.com/%{%{name}}/%{%{name}}/releases/download/%{version}/%{name}-%{version}.tar.gz
 Source1:        https://sourceforge.net/projects/levent/files/libevent/libevent-%{libeventmaj}/%{libeventfile}
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -78,8 +78,9 @@ fi
 %{_mandir}/man1/tmux.1.*
 
 %changelog
-* Tue Nov 10 2015 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.1-0
+* Tue Nov 10 2015 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.1-1
 - tmux 2.1 update
+- tmux url updates for github
 
 * Thu May 14 2015 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.0-1
 - include a static build of libevent 2.0.x stable
