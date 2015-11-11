@@ -13,7 +13,7 @@ Group:          Applications/System
 # 3 clause BSD licensed.
 License:        ISC and BSD
 URL:            https://tmux.github.io/
-Source0:        https://github.com/%{%{name}}/%{%{name}}/releases/download/%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/%{name}/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
 Source1:        https://sourceforge.net/projects/levent/files/libevent/libevent-%{libeventmaj}/%{libeventfile}
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
