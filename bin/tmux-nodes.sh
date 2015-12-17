@@ -11,7 +11,7 @@ splitmode="v"
 n=1
 
 tmux new-session -d -s ${sessname} -n ${winname} '/bin/bash -l'
-tmux selectw -t ${sessname}
+tmux select-window -t ${sessname}:${winname}
 for i in ${@} ; do
   panename="$((${n}-1))"
   tmux select-layout -t ${sessname}:${winname} tiled >/dev/null 2>&1
