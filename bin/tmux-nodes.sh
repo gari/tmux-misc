@@ -17,7 +17,7 @@ for i in ${@} ; do
   tmux select-layout -t ${sessname}:${winname} tiled >/dev/null 2>&1
   tmux send-keys -t ${sessname}:${winname}.${panename} "ssh ${i}" C-m
   if [ ${n} -lt ${#} ] ; then
-    tmux split-window -t ${sessname}:${winname}.${panename} -${splitmode}
+    tmux split-window -t ${sessname}:${winname}.${panename} -${splitmode} -p 50
     if [ "${splitmode}" == "v" ] ; then
       splitmode="h"
     else
