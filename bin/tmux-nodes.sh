@@ -11,6 +11,8 @@ splitmode="v"
 n=1
 
 tmux new-session -d -s ${sessname} -n ${winname} '/bin/bash -l'
+tmux set-window-option -g automatic-rename off
+tmux set-window-option -g allow-rename off
 tmux select-window -t ${sessname}:${winname}
 for i in ${@} ; do
   panename="$((${n}-1))"
