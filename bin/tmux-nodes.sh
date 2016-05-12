@@ -31,7 +31,7 @@ tmuxcmdstream=""
 # we want to start a new session only if we don't have one
 # otherwise attach to an existing home session
 if `tmux list-sessions 2>/dev/null | grep -q "^${sessname}:"` ; then
-  tmuxcmdstream="attach-session -t ${sessname} ; "
+  tmuxcmdstream+="attach-session -t ${sessname} ; "
   tmuxcmdstream+="new-window -n ${winname} ; "
 else
   tmuxcmdstream="new-session -s ${sessname} -n ${winname} /bin/bash -l ; "
