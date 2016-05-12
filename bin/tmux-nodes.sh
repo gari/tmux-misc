@@ -1,44 +1,60 @@
 #!/bin/bash
 
-if [ ${#} -eq 0 ] ; then
-  echo "$(basename ${0}) srv1 srv2 ... srvN" 1>&2
-  exit 1
-fi
-
 # XXX - run "bash -l" by default, use "getent" or something similar to get user's shell (or environment var)
 # XXX - runs "ssh ..." by default, might need options passed (or environment var)
 # XXX - probably want to pick a static, normal tmux session name, like "tmux-nodes" and use -A/-D to create/attach/detach; always use that as our "home" session
 # XXX - probably want to check for $TMUX environment var
 # XXX - pane names might be set to passed name/IP of SSH hosts(? probably not, given length, ., etc.)
 
-# use PID, date/timestamp and a random number for session and window name(s)
-sessname="${$}-$(date +%Y%m%d%H%M%S)-${RANDOM}"
-winname="${$}-${#}-nodes"
+# we need some hostnames
+if [ ${#} -eq 0 ] ; then
+  echo "$(basename ${0}) srv1 srv2 ... srvN" 1>&2
+  exit 1
+fi
 
-# split mode alternates between v and h
+# our "home" session is called tmux-nodes
+sessname="tmux-nodes"
+# windows are named with PID-DATE-#NODES
+winname="${$}-$(date +%Y%m%d%H%M%S)-${#}nodes"
+# and a nice name for session+window
+sesswin="${sessname}:${winname}"
+
+# alternate between veritcal and horizontal split mode
 splitmode="v"
 
-# counter for pane name
+# pane counter
 n=1
 
-tmux list-sessions >/dev/null 2>&1
-if [ $? -ne 0 ] ; then
-  # if we don't have a session, create one
-  tmux new-session -d -s ${sessname} -n ${winname} '/bin/bash -l'
+# we'll use a "command stream" for tmux
+tmuxcmdstream=""
+
+# and ignore any existing TMUX environment var
+test -n "${TMUX}" && unset TMUX
+
+# we want to start a new session only if we don't have one
+# otherwise attach to an existing home session
+if `tmux list-sessions 2>/dev/null | grep -q "^${sessname}:"` ; then
+  tmuxcmdstream="-2 attach-session -t ${sessname} ; "
+  tmuxcmdstream+="new-window -n ${winname} ; "
 else
-  # otherwise just use the first session name
-  sessname="$(tmux list-sessions | head -1 | cut -f1 -d:)"
-  tmux new-window -d -n ${winname} '/bin/bash -l'
+  tmuxcmdstream="new-session -s ${sessname} -n ${winname} /bin/bash -l ; "
 fi
-tmux set-window-option -g automatic-rename off
-tmux set-window-option -g allow-rename off
-tmux select-window -t ${sessname}:${winname}
+# need these to keep odd things from happening with renames on RHEL/CENTOS 7+
+tmuxcmdstream+="set-window-option -g automatic-rename off ; "
+tmuxcmdstream+="set-window-option -g allow-rename off ; "
+# select our new window
+tmuxcmdstream+="select-window -t ${sessname}:${winname} ; "
+# iterate through each name passed as an SSH hostname
 for i in ${@} ; do
+  # pane names are 0..${#}
   panename="$((${n}-1))"
-  tmux select-layout -t ${sessname}:${winname} tiled >/dev/null 2>&1
-  tmux send-keys -t ${sessname}:${winname}.${panename} "ssh ${i}" C-m
+  # retile every trip through, then send SSH command
+  tmuxcmdstream+="select-layout -t ${sesswin} tiled ; "
+  # XXX - send-keys needs either either quotation or "Space" here - this works 100%
+  tmuxcmdstream+="send-keys -t ${sesswin}.${panename} ssh Space ${i} C-m ; "
+  # alternate split modes
   if [ ${n} -lt ${#} ] ; then
-    tmux split-window -t ${sessname}:${winname}.${panename} -${splitmode} -p 50
+    tmuxcmdstream+="split-window -t ${sesswin}.${panename} -${splitmode} -p 50 ; "
     if [ "${splitmode}" == "v" ] ; then
       splitmode="h"
     else
@@ -47,6 +63,10 @@ for i in ${@} ; do
     n=$((${n}+1))
   fi
 done
-tmux select-pane -t top-left
-tmux set-window-option -t ${sessname}:${winname} synchronize-panes on
-tmux -2 attach-session -d -t ${sessname}
+# select first pane of our new window
+tmuxcmdstream+="select-pane -t ${sesswin}.0 ; "
+# synchronize panes
+tmuxcmdstream+="set-window-option -t ${sesswin} synchronize-panes on ; "
+# XXX - might need "switch-client" here...
+# run it
+tmux ${tmuxcmdstream}
