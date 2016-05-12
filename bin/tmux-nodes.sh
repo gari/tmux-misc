@@ -53,7 +53,7 @@ if `tmux list-sessions 2>/dev/null | grep -q "^${sessname}:"` ; then
   fi
   tmuxcmdstream+="new-window -n ${winname} ; "
 else
-  tmuxcmdstream="new-session -d -s ${sessname} -n ${winname} /bin/bash -l ; "
+  tmuxcmdstream+="new-session -d -s ${sessname} -n ${winname} /bin/bash -l ; "
   if [ -n "${TMUX}" ] ; then
     tmuxcmdstream+="switch-client -t ${sessname} ; "
   else
