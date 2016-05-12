@@ -28,13 +28,10 @@ n=1
 # we'll use a "command stream" for tmux
 tmuxcmdstream=""
 
-# and ignore any existing TMUX environment var
-test -n "${TMUX}" && unset TMUX
-
 # we want to start a new session only if we don't have one
 # otherwise attach to an existing home session
 if `tmux list-sessions 2>/dev/null | grep -q "^${sessname}:"` ; then
-  tmuxcmdstream="-2 attach-session -t ${sessname} ; "
+  tmuxcmdstream="attach-session -t ${sessname} ; "
   tmuxcmdstream+="new-window -n ${winname} ; "
 else
   tmuxcmdstream="new-session -s ${sessname} -n ${winname} /bin/bash -l ; "
@@ -48,13 +45,17 @@ tmuxcmdstream+="select-window -t ${sessname}:${winname} ; "
 for i in ${@} ; do
   # pane names are 0..${#}
   panename="$((${n}-1))"
+  # window+pane
+  winpane="${sesswin}.${panename}"
+  # resize to 80x24
+  tmuxcmdstream+="resize-pane -t ${winpane} -x 80 -y 24 ; "
   # retile every trip through, then send SSH command
   tmuxcmdstream+="select-layout -t ${sesswin} tiled ; "
   # XXX - send-keys needs either either quotation or "Space" here - this works 100%
-  tmuxcmdstream+="send-keys -t ${sesswin}.${panename} ssh Space ${i} C-m ; "
+  tmuxcmdstream+="send-keys -t ${winpane} ssh Space ${i} C-m ; "
   # alternate split modes
   if [ ${n} -lt ${#} ] ; then
-    tmuxcmdstream+="split-window -t ${sesswin}.${panename} -${splitmode} -p 50 ; "
+    tmuxcmdstream+="split-window -t ${winpane} -${splitmode} -p 50 ; "
     if [ "${splitmode}" == "v" ] ; then
       splitmode="h"
     else
@@ -69,4 +70,4 @@ tmuxcmdstream+="select-pane -t ${sesswin}.0 ; "
 tmuxcmdstream+="set-window-option -t ${sesswin} synchronize-panes on ; "
 # XXX - might need "switch-client" here...
 # run it
-tmux ${tmuxcmdstream}
+tmux -2 ${tmuxcmdstream}
