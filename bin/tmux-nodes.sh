@@ -44,10 +44,21 @@ tmuxcmdstream=""
 # we want to start a new session only if we don't have one
 # otherwise attach to an existing home session
 if `tmux list-sessions 2>/dev/null | grep -q "^${sessname}:"` ; then
-  tmuxcmdstream+="attach-session -t ${sessname} ; "
+  if [ -n "${TMUX}" ] ; then
+    if [ "${mysess}" != "${sessname}" ] ; then
+      tmuxcmdstream+="switch-client -t ${sessname} ; "
+    fi
+  else
+    tmuxcmdstream+="attach-session -t ${sessname} ; "
+  fi
   tmuxcmdstream+="new-window -n ${winname} ; "
 else
-  tmuxcmdstream="new-session -s ${sessname} -n ${winname} /bin/bash -l ; "
+  tmuxcmdstream="new-session -d -s ${sessname} -n ${winname} /bin/bash -l ; "
+  if [ -n "${TMUX}" ] ; then
+    tmuxcmdstream+="switch-client -t ${sessname} ; "
+  else
+    tmuxcmdstream+="attach-session -t ${sessname} ; "
+  fi
 fi
 # need these to keep odd things from happening with renames on RHEL/CENTOS 7+
 tmuxcmdstream+="set-window-option -g automatic-rename off ; "
@@ -84,4 +95,4 @@ tmuxcmdstream+="select-pane -t ${sesswin}.0 ; "
 # synchronize panes
 tmuxcmdstream+="set-window-option -t ${sesswin} synchronize-panes on ; "
 # run it
-tmux -2 ${tmuxcmdstream}
+env TMUX='' tmux -2 ${tmuxcmdstream}
