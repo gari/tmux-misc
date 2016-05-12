@@ -55,7 +55,7 @@ tmuxcmdstream+="set-window-option -g allow-rename off ; "
 # resize meanly
 tmuxcmdstream+="set-window-option -g aggressive-resize on ; "
 # select our new window
-tmuxcmdstream+="select-window -t ${sessname}:${winname} ; "
+tmuxcmdstream+="select-window -t ${sesswin} ; "
 # iterate through each name passed as an SSH hostname
 for i in ${@} ; do
   # pane names are 0..${#}
