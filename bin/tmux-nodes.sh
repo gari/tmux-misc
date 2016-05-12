@@ -92,5 +92,6 @@ done
 tmuxcmdstream+="select-pane -t ${sesswin}.0 ; "
 # synchronize panes
 tmuxcmdstream+="set-window-option -t ${sesswin} synchronize-panes on ; "
-# run it
-env TMUX='' tmux -2 ${tmuxcmdstream}
+
+# run our command stream
+tmux -2 ${tmuxcmdstream}
