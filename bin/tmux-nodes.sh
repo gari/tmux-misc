@@ -42,14 +42,21 @@ tmuxcmdstream=""
 # otherwise attach to an existing home session
 if `tmux list-sessions 2>/dev/null | grep -q "^${sessname}:"` ; then
   if [ -n "${TMUX}" ] ; then
-    # XXX this does NOT work. why?
+    # XXX "switch-client" by itself does NOT work.
+    # XXX have to juggle a new (detached) session with properly named window then move it.
+    # XXX why?
     if [ "${mysess}" != "${sessname}" ] ; then
+      tmuxcmdstream+="new-session -d -s tmp-${sessname} -n ${winname} /bin/bash -l ; "
+      tmuxcmdstream+="move-window -s tmp-${sessname}:${winname} -t ${sessname} ; "
       tmuxcmdstream+="switch-client -t ${sessname} ; "
     fi
   else
     tmuxcmdstream+="attach-session -t ${sessname} ; "
   fi
-  tmuxcmdstream+="new-window -n ${winname} ; "
+  # XXX - ugly, PID/DATE/#NODES should be a long enough ID, but this should be necessary
+  if ! `tmux list-windows -t ${sessname} | grep -q ": ${winname}"` ; then
+    tmuxcmdstream+="new-window -n ${winname} ; "
+  fi
 else
   tmuxcmdstream+="new-session -d -s ${sessname} -n ${winname} /bin/bash -l ; "
   if [ -n "${TMUX}" ] ; then
