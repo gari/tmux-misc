@@ -83,6 +83,5 @@ done
 tmuxcmdstream+="select-pane -t ${sesswin}.0 ; "
 # synchronize panes
 tmuxcmdstream+="set-window-option -t ${sesswin} synchronize-panes on ; "
-# XXX - might need "switch-client" here...
 # run it
 tmux -2 ${tmuxcmdstream}
