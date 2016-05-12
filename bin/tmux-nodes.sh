@@ -6,6 +6,11 @@
 # XXX - probably want to check for $TMUX environment var
 # XXX - pane names might be set to passed name/IP of SSH hosts(? probably not, given length, ., etc.)
 
+# XXX - things to figure out
+#   are we in tmux already or not?
+#   do we have a home session or not?
+#   if we're in tmux, do we have our home session or not, and are we in it or not?
+
 # we need some hostnames
 if [ ${#} -eq 0 ] ; then
   echo "$(basename ${0}) srv1 srv2 ... srvN" 1>&2
@@ -24,6 +29,14 @@ splitmode="v"
 
 # pane counter
 n=1
+
+# are we in tmux or not?
+mysess=""
+intmux=""
+test -n "${TMUX}" && {
+  intmux="0"
+  mysess="$(tmux display-message -p '#S')"
+}
 
 # we'll use a "command stream" for tmux
 tmuxcmdstream=""
