@@ -39,6 +39,8 @@ fi
 # need these to keep odd things from happening with renames on RHEL/CENTOS 7+
 tmuxcmdstream+="set-window-option -g automatic-rename off ; "
 tmuxcmdstream+="set-window-option -g allow-rename off ; "
+# resize meanly
+tmuxcmdstream+="set-window-option -g aggressive-resize on ; "
 # select our new window
 tmuxcmdstream+="select-window -t ${sessname}:${winname} ; "
 # iterate through each name passed as an SSH hostname
