@@ -2,9 +2,6 @@
 
 # XXX - run "bash -l" by default, use "getent" or something similar to get user's shell (or environment var)
 # XXX - runs "ssh ..." by default, might need options passed (or environment var)
-# XXX - probably want to pick a static, normal tmux session name, like "tmux-nodes" and use -A/-D to create/attach/detach; always use that as our "home" session
-# XXX - probably want to check for $TMUX environment var
-# XXX - pane names might be set to passed name/IP of SSH hosts(? probably not, given length, ., etc.)
 
 # XXX - things to figure out
 #   are we in tmux already or not?
@@ -28,7 +25,7 @@ sesswin="${sessname}:${winname}"
 splitmode="v"
 
 # pane counter
-n=1
+n="1"
 
 # are we in tmux or not?
 mysess=""
@@ -45,6 +42,7 @@ tmuxcmdstream=""
 # otherwise attach to an existing home session
 if `tmux list-sessions 2>/dev/null | grep -q "^${sessname}:"` ; then
   if [ -n "${TMUX}" ] ; then
+    # XXX this does NOT work. why?
     if [ "${mysess}" != "${sessname}" ] ; then
       tmuxcmdstream+="switch-client -t ${sessname} ; "
     fi
