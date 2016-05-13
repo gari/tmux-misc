@@ -96,7 +96,7 @@ for i in ${@} ; do
   tmuxcmdstream+="send-keys -t ${winpane} ${TMUX_NODES_CMD} Space ${i} C-m ; "
   # alternate split modes
   if [ ${n} -lt ${#} ] ; then
-    tmuxcmdstream+="split-window -t ${winpane} -${splitmode} -p 50 ; "
+    tmuxcmdstream+="split-window -t ${winpane} -${splitmode} -p 50 ${TMUX_NODES_SHELL} ; "
     if [ "${splitmode}" == "v" ] ; then
       splitmode="h"
     else
