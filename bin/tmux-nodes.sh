@@ -5,10 +5,11 @@
 #   do we have a home session or not?
 #   if we're in tmux, do we have our home session or not, and are we in it or not?
 #   why doesn't switch-client work when jumping from an external session to an extant home session?
+#   need a usage/help function?
 
 # we need some hostnames
 if [ ${#} -eq 0 ] ; then
-  echo "$(basename ${0}) srv1 srv2 ... srvN" 1>&2
+  echo "$(basename "${BASH_SOURCE[0]}") srv1 srv2 ... srvN" 1>&2
   exit 1
 fi
 
