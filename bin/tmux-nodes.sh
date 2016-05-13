@@ -35,6 +35,9 @@ test -n "${TMUX}" && {
   mysess="$(tmux display-message -p '#S')"
 }
 
+# do we need the window or not - 0 yes, 1 no
+needwin="0"
+
 # we'll use a "command stream" for tmux
 tmuxcmdstream=""
 
@@ -49,12 +52,13 @@ if `tmux list-sessions 2>/dev/null | grep -q "^${sessname}:"` ; then
       tmuxcmdstream+="new-session -d -s tmp-${sessname} -n ${winname} /bin/bash -l ; "
       tmuxcmdstream+="move-window -s tmp-${sessname}:${winname} -t ${sessname} ; "
       tmuxcmdstream+="switch-client -t ${sessname} ; "
+      needwin="1"
     fi
   else
     tmuxcmdstream+="attach-session -t ${sessname} ; "
   fi
-  # XXX - ugly, PID/DATE/#NODES should be a long enough ID, but this should be necessary
-  if ! `tmux list-windows -t ${sessname} | grep -q ": ${winname}"` ; then
+  # XXX - ugly
+  if [ "${needwin}" -eq "0" ] ; then
     tmuxcmdstream+="new-window -n ${winname} ; "
   fi
 else
