@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# XXX - run "bash -l" by default, use "getent" or something similar to get user's shell (or environment var)
-# XXX - runs "ssh ..." by default, might need options passed (or environment var)
-
 # XXX - things to figure out
 #   are we in tmux already or not?
 #   do we have a home session or not?
@@ -38,6 +35,14 @@ test -n "${TMUX}" && {
 # do we need the window or not - 0 yes, 1 no
 needwin="0"
 
+# set default shell to /bin/bash if it's not set
+: ${SHELL:="/bin/bash"}
+# use a (login) shell as our default new window command
+: ${TMUX_NODES_SHELL:="${SHELL} -l"}
+# use ssh as the default command to run
+: ${TMUX_NODES_CMD:="ssh"}
+TMUX_NODES_CMD="${TMUX_NODES_CMD// / Space }"
+
 # we'll use a "command stream" for tmux
 tmuxcmdstream=""
 
@@ -49,9 +54,10 @@ if `tmux list-sessions 2>/dev/null | grep -q "^${sessname}:"` ; then
     # XXX have to juggle a new (detached) session with properly named window then move it.
     # XXX why?
     if [ "${mysess}" != "${sessname}" ] ; then
-      tmuxcmdstream+="new-session -d -s tmp-${sessname} -n ${winname} /bin/bash -l ; "
+      tmuxcmdstream+="new-session -d -s tmp-${sessname} -n ${winname} ${TMUX_NODES_SHELL} ; "
       tmuxcmdstream+="move-window -s tmp-${sessname}:${winname} -t ${sessname} ; "
       tmuxcmdstream+="switch-client -t ${sessname} ; "
+      # XXX - kill-session on temp session just in case?
       needwin="1"
     fi
   else
@@ -62,7 +68,7 @@ if `tmux list-sessions 2>/dev/null | grep -q "^${sessname}:"` ; then
     tmuxcmdstream+="new-window -n ${winname} ; "
   fi
 else
-  tmuxcmdstream+="new-session -d -s ${sessname} -n ${winname} /bin/bash -l ; "
+  tmuxcmdstream+="new-session -d -s ${sessname} -n ${winname} ${TMUX_NODES_SHELL} ; "
   if [ -n "${TMUX}" ] ; then
     tmuxcmdstream+="switch-client -t ${sessname} ; "
   else
@@ -87,7 +93,7 @@ for i in ${@} ; do
   # retile every trip through, then send SSH command
   tmuxcmdstream+="select-layout -t ${sesswin} tiled ; "
   # XXX - send-keys needs either either quotation or "Space" here - this works 100%
-  tmuxcmdstream+="send-keys -t ${winpane} ssh Space ${i} C-m ; "
+  tmuxcmdstream+="send-keys -t ${winpane} ${TMUX_NODES_CMD} Space ${i} C-m ; "
   # alternate split modes
   if [ ${n} -lt ${#} ] ; then
     tmuxcmdstream+="split-window -t ${winpane} -${splitmode} -p 50 ; "
