@@ -4,6 +4,7 @@
 #   are we in tmux already or not?
 #   do we have a home session or not?
 #   if we're in tmux, do we have our home session or not, and are we in it or not?
+#   why doesn't switch-client work when jumping from an external session to an extant home session?
 
 # we need some hostnames
 if [ ${#} -eq 0 ] ; then
@@ -42,6 +43,7 @@ needwin="0"
 # use ssh as the default command to run
 : ${TMUX_NODES_CMD:="ssh"}
 TMUX_NODES_CMD="${TMUX_NODES_CMD// / Space }"
+# XXX - need a TMUX_NODES_REMOTE_CMD with no default to run on ssh hosts
 
 # we'll use a "command stream" for tmux
 tmuxcmdstream=""
@@ -75,6 +77,7 @@ else
     tmuxcmdstream+="attach-session -t ${sessname} ; "
   fi
 fi
+# XXX - should these be global or not?
 # need these to keep odd things from happening with renames on RHEL/CENTOS 7+
 tmuxcmdstream+="set-window-option -g automatic-rename off ; "
 tmuxcmdstream+="set-window-option -g allow-rename off ; "
