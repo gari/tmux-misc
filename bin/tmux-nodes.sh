@@ -43,7 +43,9 @@ needwin="0"
 # use ssh as the default command to run
 : ${TMUX_NODES_CMD:="ssh"}
 TMUX_NODES_CMD="${TMUX_NODES_CMD// / Space }"
-# XXX - need a TMUX_NODES_REMOTE_CMD with no default to run on ssh hosts
+# TMUX_NODES_REMOTE_CMD has no default; cmd to run on remote hosts
+: ${TMUX_NODES_REMOTE_CMD:=""}
+TMUX_NODES_REMOTE_CMD="${TMUX_NODES_REMOTE_CMD// / Space }"
 
 # we'll use a "command stream" for tmux
 tmuxcmdstream=""
@@ -96,7 +98,7 @@ for i in ${@} ; do
   # retile every trip through, then send SSH command
   tmuxcmdstream+="select-layout -t ${sesswin} tiled ; "
   # XXX - send-keys needs either either quotation or "Space" here - this works 100%
-  tmuxcmdstream+="send-keys -t ${winpane} ${TMUX_NODES_CMD} Space ${i} C-m ; "
+  tmuxcmdstream+="send-keys -t ${winpane} ${TMUX_NODES_CMD} Space ${i} Space ${TMUX_NODES_REMOTE_CMD} C-m ; "
   # alternate split modes
   if [ ${n} -lt ${#} ] ; then
     tmuxcmdstream+="split-window -t ${winpane} -${splitmode} -p 50 ${TMUX_NODES_SHELL} ; "
