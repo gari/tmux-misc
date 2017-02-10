@@ -1,11 +1,11 @@
-%define libeventmaj  2.0
-%define libeventver  %{libeventmaj}.22
+%define libeventmaj  2.1
+%define libeventver  %{libeventmaj}.8
 %define libeventdir  libevent-%{libeventver}-stable
 %define libeventfile %{libeventdir}.tar.gz
 
 Name:           tmux
 Version:        2.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A terminal multiplexer
 
 Group:          Applications/System
@@ -78,6 +78,9 @@ fi
 %{_mandir}/man1/tmux.1.*
 
 %changelog
+* Fri Feb 10 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.3-2
+- libevent 2.1.8 stable
+
 * Mon Oct 10 2016 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.3-1
 - tmux 2.3
 
