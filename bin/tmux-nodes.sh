@@ -86,6 +86,8 @@ tmuxcmdstream+="set-window-option -g automatic-rename off ; "
 tmuxcmdstream+="set-window-option -g allow-rename off ; "
 # resize meanly
 tmuxcmdstream+="set-window-option -g aggressive-resize on ; "
+# renumber windows on close
+tmuxcmdstream+="set -g renumber-windows on ; "
 # select our new window
 tmuxcmdstream+="select-window -t ${sesswin} ; "
 # iterate through each name passed as an SSH hostname
