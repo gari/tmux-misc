@@ -5,7 +5,7 @@
 
 Name:           tmux
 Version:        2.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A terminal multiplexer
 
 Group:          Applications/System
@@ -14,7 +14,7 @@ Group:          Applications/System
 License:        ISC and BSD
 URL:            https://tmux.github.io/
 Source0:        https://github.com/%{name}/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
-Source1:        https://sourceforge.net/projects/levent/files/libevent/libevent-%{libeventmaj}/%{libeventfile}
+Source1:        https://github.com/libevent/libevent/releases/download/release-%{libeventmaj}-stable/%{libeventfile}
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  glibc-static
@@ -78,6 +78,9 @@ fi
 %{_mandir}/man1/tmux.1.*
 
 %changelog
+* Thu Feb 10 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.3-3
+- libevent lives on github now
+
 * Fri Feb 10 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.3-2
 - libevent 2.1.8 stable
 
