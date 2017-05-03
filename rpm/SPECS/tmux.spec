@@ -4,8 +4,8 @@
 %define libeventfile %{libeventdir}.tar.gz
 
 Name:           tmux
-Version:        2.3
-Release:        3%{?dist}
+Version:        2.4
+Release:        0%{?dist}
 Summary:        A terminal multiplexer
 
 Group:          Applications/System
@@ -78,6 +78,9 @@ fi
 %{_mandir}/man1/tmux.1.*
 
 %changelog
+* Tue May  2 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.4-0
+- tmux 2.4
+
 * Thu Feb 10 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.3-3
 - libevent lives on github now
 
