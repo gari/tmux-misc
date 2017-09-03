@@ -8,6 +8,7 @@ Version:        2.5
 Release:        0%{?dist}
 Summary:        A terminal multiplexer
 
+Packager:       ik <gari@garillka.name>
 Group:          Applications/System
 # Most of the source is ISC licensed; some of the files in compat/ are 2 and
 # 3 clause BSD licensed.
