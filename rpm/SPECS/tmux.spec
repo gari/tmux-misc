@@ -4,7 +4,7 @@
 %define libeventfile %{libeventdir}.tar.gz
 
 Name:           tmux
-Version:        2.5
+Version:        2.6
 Release:        0%{?dist}
 Summary:        A terminal multiplexer
 
@@ -73,18 +73,21 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc CHANGES FAQ NOTES TODO example_tmux.conf
+%doc CHANGES NOTES TODO example_tmux.conf
 %{_bindir}/tmux
 %{_mandir}/man1/tmux.1.*
 
 %changelog
+* Tue Oct 10 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.6-0
+- tmux 2.6
+
 * Tue May 30 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.5-0
 - tmux 2.5
 
 * Tue May  2 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.4-0
 - tmux 2.4
 
-* Thu Feb 10 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.3-3
+* Thu Feb 16 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.3-3
 - libevent lives on github now
 
 * Fri Feb 10 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.3-2
