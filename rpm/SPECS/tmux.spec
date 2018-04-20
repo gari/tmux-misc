@@ -4,7 +4,7 @@
 %define libeventfile %{libeventdir}.tar.gz
 
 Name:           tmux
-Version:        2.6
+Version:        2.7
 Release:        0%{?dist}
 Summary:        A terminal multiplexer
 
@@ -78,6 +78,9 @@ fi
 %{_mandir}/man1/tmux.1.*
 
 %changelog
+* Fri Apr 20 2018 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.7-0
+- tmux 2.7
+
 * Tue Oct 10 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.6-0
 - tmux 2.6
 
