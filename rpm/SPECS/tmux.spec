@@ -4,7 +4,7 @@
 %define libeventfile %{libeventdir}.tar.gz
 
 Name:           tmux
-Version:        2.7
+Version:        2.8
 Release:        0%{?dist}
 Summary:        A terminal multiplexer
 
@@ -14,7 +14,7 @@ Group:          Applications/System
 License:        ISC and BSD
 URL:            https://tmux.github.io/
 Source0:        https://github.com/%{name}/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
-Source1:        https://github.com/libevent/libevent/releases/download/release-%{libeventmaj}-stable/%{libeventfile}
+Source1:        https://github.com/libevent/libevent/releases/download/release-%{libeventver}-stable/%{libeventfile}
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  glibc-static
@@ -78,6 +78,10 @@ fi
 %{_mandir}/man1/tmux.1.*
 
 %changelog
+* Wed Oct 17 2018 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.8-0
+- tmux 2.8
+- fix libevent source url
+
 * Fri Apr 20 2018 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.7-0
 - tmux 2.7
 
