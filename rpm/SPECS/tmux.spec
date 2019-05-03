@@ -4,7 +4,7 @@
 %define libeventfile %{libeventdir}.tar.gz
 
 Name:           tmux
-Version:        2.8
+Version:        2.9
 Release:        0%{?dist}
 Summary:        A terminal multiplexer
 
@@ -78,40 +78,43 @@ fi
 %{_mandir}/man1/tmux.1.*
 
 %changelog
-* Wed Oct 17 2018 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.8-0
+* Thu May  2 2019 ryan woodsmall <rwoodsmall@gmail.com> - 2.9-0
+- tmux 2.9
+
+* Wed Oct 17 2018 ryan woodsmall <rwoodsmall@gmail.com> - 2.8-0
 - tmux 2.8
 - fix libevent source url
 
-* Fri Apr 20 2018 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.7-0
+* Fri Apr 20 2018 ryan woodsmall <rwoodsmall@gmail.com> - 2.7-0
 - tmux 2.7
 
-* Tue Oct 10 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.6-0
+* Tue Oct 10 2017 ryan woodsmall <rwoodsmall@gmail.com> - 2.6-0
 - tmux 2.6
 
-* Tue May 30 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.5-0
+* Tue May 30 2017 ryan woodsmall <rwoodsmall@gmail.com> - 2.5-0
 - tmux 2.5
 
-* Tue May  2 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.4-0
+* Tue May  2 2017 ryan woodsmall <rwoodsmall@gmail.com> - 2.4-0
 - tmux 2.4
 
-* Thu Feb 16 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.3-3
+* Thu Feb 16 2017 ryan woodsmall <rwoodsmall@gmail.com> - 2.3-3
 - libevent lives on github now
 
-* Fri Feb 10 2017 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.3-2
+* Fri Feb 10 2017 ryan woodsmall <rwoodsmall@gmail.com> - 2.3-2
 - libevent 2.1.8 stable
 
-* Mon Oct 10 2016 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.3-1
+* Mon Oct 10 2016 ryan woodsmall <rwoodsmall@gmail.com> - 2.3-1
 - tmux 2.3
 
-* Tue May 03 2016 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.2-1
+* Tue May 03 2016 ryan woodsmall <rwoodsmall@gmail.com> - 2.2-1
 - tmux 2.2
 - no more examples/ directory, specify example_tmux.conf as doc
 
-* Tue Nov 10 2015 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.1-1
+* Tue Nov 10 2015 ryan woodsmall <rwoodsmall@gmail.com> - 2.1-1
 - tmux 2.1 update
 - tmux url updates for github
 
-* Thu May 14 2015 ryan woodsmall <rwoodsmall@g_m_a_i_l.com> - 2.0-1
+* Thu May 14 2015 ryan woodsmall <rwoodsmall@gmail.com> - 2.0-1
 - include a static build of libevent 2.0.x stable
 - build tmux 2.0 against custom libevent
 
