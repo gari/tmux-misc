@@ -1,10 +1,10 @@
 %define libeventmaj  2.1
-%define libeventver  %{libeventmaj}.8
+%define libeventver  %{libeventmaj}.11
 %define libeventdir  libevent-%{libeventver}-stable
 %define libeventfile %{libeventdir}.tar.gz
 
 Name:           tmux
-Version:        2.9a
+Version:        3.0a
 Release:        0%{?dist}
 Summary:        A terminal multiplexer
 
@@ -73,11 +73,15 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc CHANGES NOTES TODO example_tmux.conf
+%doc CHANGES NOTES example_tmux.conf
 %{_bindir}/tmux
 %{_mandir}/man1/tmux.1.*
 
 %changelog
+* Tue Dec  3 2019 ryan woodsmall <rwoodsmall@gmail.com>
+- tmux 3.0a
+- libevent 2.1.11
+
 * Thu May  2 2019 ryan woodsmall <rwoodsmall@gmail.com> - 2.9a-0
 - tmux 2.9a
 
