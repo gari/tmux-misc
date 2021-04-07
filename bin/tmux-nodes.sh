@@ -6,6 +6,10 @@
 #   if we're in tmux, do we have our home session or not, and are we in it or not?
 #   why doesn't switch-client work when jumping from an external session to an extant home session?
 #   need a usage/help function?
+# XXX - mode-keys
+#   emacs on some systems, or via ssh, vi on others?
+#   wth?
+#   need a "set-window-option -g mode-keys vi"
 
 # we need some hostnames
 if [ ${#} -eq 0 ] ; then
