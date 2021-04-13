@@ -4,7 +4,7 @@
 %define libeventfile %{libeventdir}.tar.gz
 
 Name:           tmux
-Version:        3.1c
+Version:        3.2
 Release:        1%{?dist}
 Summary:        A terminal multiplexer
 
@@ -78,6 +78,9 @@ fi
 %{_mandir}/man1/tmux.1.*
 
 %changelog
+* Tue Apr 13 2021 ryan woodsmall <rwoodsmall@gmail.com>
+- tmux 3.2
+
 * Fri Oct 30 2020 ryan woodsmall <rwoodsmall@gmail.com>
 - tmux 3.1c
 
