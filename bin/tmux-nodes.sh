@@ -121,6 +121,8 @@ done
 tmuxcmdstream+="select-pane -t ${sesswin}.0 ; "
 # synchronize panes
 tmuxcmdstream+="set-window-option -t ${sesswin} synchronize-panes on ; "
+# enable clipboard
+tmuxcmdstream+="set -s set-clipboard on ; "
 
 # run our command stream
 tmux -2 ${tmuxcmdstream}
